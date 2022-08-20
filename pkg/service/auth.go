@@ -29,6 +29,9 @@ func (s *AuthService) ParseToken(token string) (int, error) {
 
 func (s *AuthService) CreateUser(user models.User) (int, error) {
 	user.Password = generateUserPasswordHash(user.Password)
+	if err := user.Validate(); err != nil {
+		return 0, err
+	}
 	return s.repo.CreateUser(user)
 }
 
