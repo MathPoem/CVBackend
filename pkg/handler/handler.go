@@ -22,6 +22,12 @@ func (h *Handler) InitRouter() *gin.Engine {
 		auth.POST("/sign-in", h.SignIn)
 	}
 
+	private := router.Group("/user", h.UserIdentity)
+	{
+		private.POST("/estimate", h.Estimate)
+		private.GET("/estimate", h.GetEstimate)
+	}
+
 	//public := router.Group("/api")
 	//{
 	//	university := public.Group("/university")

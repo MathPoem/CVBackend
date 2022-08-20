@@ -81,7 +81,7 @@ CREATE TABLE "seminar"
 CREATE TABLE users
 (
     "id"           bigserial not null primary key,
-    "username"     varchar   not null,
+    "username"     varchar   not null unique ,
     "password"     varchar   not null,
     "email_1"      varchar   not null,
     "univ_1_id"    int       not null,
