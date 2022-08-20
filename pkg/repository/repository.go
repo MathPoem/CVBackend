@@ -1,18 +1,27 @@
 package repository
 
-import "github.com/jmoiron/sqlx"
+import (
+	"CVBackend/models"
+	"github.com/jmoiron/sqlx"
+)
 
 type Authorization interface {
+	CreateUser(user models.User) (int, error)
+	GetUser(username, password string) (models.User, error)
 }
 
-type DefaultContent interface {
+type Default interface {
+	InDefaultContent() error
 }
 
 type Repository struct {
 	Authorization
-	DefaultContent
+	Default
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
-	return &Repository{}
+	return &Repository{
+		Authorization: NewAuthPostgres(db),
+		Default:       NewDefaultContent(db),
+	}
 }

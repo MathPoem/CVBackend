@@ -35,6 +35,11 @@ func main() {
 	services := service.NewService(repo)
 	handlers := handler.NewHandler(services)
 
+	//err = repo.Default.InDefaultContent()
+	//if err != nil {
+	//	logrus.Fatalf("error init default %s", err)
+	//}
+
 	srv := new(server.Server)
 	if err := srv.Run(viper.GetString("port"), handlers.InitRouter()); err != nil {
 		logrus.Fatalf("error run server %s", err.Error())
