@@ -1,0 +1,1 @@
+DROP TABLE university, department, school, person, program, course, lecture, seminar, users, estimations, estimate_value
