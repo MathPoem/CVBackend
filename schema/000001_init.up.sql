@@ -30,11 +30,12 @@ CREATE TABLE "person"
     "first_name"    varchar   not null,
     "middle_name"   varchar   not null,
     "second_name"   varchar   not null,
-    "age"           int       not null,
+    "age"           int,
     "url"           varchar,
     "first_degree"  varchar,
     "second_degree" varchar,
-    "third_degree"  varchar
+    "third_degree"  varchar,
+    "useradd_id"    int
 );
 
 CREATE TABLE "program"

@@ -26,6 +26,7 @@ func (h *Handler) InitRouter() *gin.Engine {
 	{
 		private.POST("/estimate", h.Estimate)
 		private.GET("/estimate", h.GetEstimate)
+		private.POST("/person", h.CreatePerson)
 	}
 
 	//public := router.Group("/api")
