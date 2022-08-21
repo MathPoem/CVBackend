@@ -20,10 +20,20 @@ type Private interface {
 	CreatePerson(person models.Person, userId int) (int, error)
 }
 
+type Public interface {
+	GetUniversity() ([]models.University, error)
+	GetUniversityById(id int) (models.University, error)
+	GetSchool() ([]models.School, error)
+	GetSchoolById(id int) (models.School, error)
+	GetDepartment() ([]models.Department, error)
+	GetDepartmentById(id int) (models.Department, error)
+}
+
 type Repository struct {
 	Authorization
 	Default
 	Private
+	Public
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
@@ -31,5 +41,6 @@ func NewRepository(db *sqlx.DB) *Repository {
 		Authorization: NewAuthPostgres(db),
 		Default:       NewDefaultContent(db),
 		Private:       NewPrivatePostgres(db),
+		Public:        NewPublicPostgres(db),
 	}
 }

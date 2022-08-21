@@ -29,24 +29,26 @@ func (h *Handler) InitRouter() *gin.Engine {
 		private.POST("/person", h.CreatePerson)
 	}
 
-	//public := router.Group("/api")
-	//{
-	//	university := public.Group("/university")
-	//	{
-	//		university.GET("/")
-	//		university.GET("/:universityId")
-	//	}
-	//	school := public.Group("/school")
-	//	{
-	//		school.GET("/")
-	//		school.GET("/:schoolId")
-	//	}
-	//	department := public.Group("/department")
-	//	{
-	//		department.GET("/")
-	//		department.GET("/:departmentId")
-	//	}
-	//}
+	public := router.Group("/api")
+	{
+		university := public.Group("/university")
+		{
+			university.GET("/", h.GetUniversity)
+			university.GET("/:universityId", h.GetUniversityById)
+		}
+
+		school := public.Group("/school")
+		{
+			school.GET("/", h.GetSchool)
+			school.GET("/:schoolId", h.GetSchoolById)
+		}
+
+		department := public.Group("/department")
+		{
+			department.GET("/", h.GetDepartment)
+			department.GET("/:departmentId", h.GetDepartmentById)
+		}
+	}
 
 	return router
 }

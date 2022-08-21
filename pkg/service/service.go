@@ -17,14 +17,25 @@ type Private interface {
 	CreatePerson(person models.Person, userId int) (int, error)
 }
 
+type Public interface {
+	GetUniversity() ([]models.University, error)
+	GetUniversityById(id int) (models.University, error)
+	GetSchool() ([]models.School, error)
+	GetSchoolById(id int) (models.School, error)
+	GetDepartment() ([]models.Department, error)
+	GetDepartmentById(id int) (models.Department, error)
+}
+
 type Service struct {
 	Authorization
 	Private
+	Public
 }
 
 func NewService(repo *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repo),
 		Private:       NewPrivateService(repo),
+		Public:        NewPublicService(repo),
 	}
 }
