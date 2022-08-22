@@ -44,7 +44,8 @@ CREATE TABLE "program"
     "school_id"  int       not null,
     "name"       varchar   not null,
     "year_start" int       not null,
-    "semester"   int       not null
+    "semester"   int       not null,
+    "url"        varchar
 );
 
 CREATE TABLE "course"
@@ -82,7 +83,7 @@ CREATE TABLE "seminar"
 CREATE TABLE users
 (
     "id"           bigserial not null primary key,
-    "username"     varchar   not null unique ,
+    "username"     varchar   not null unique,
     "password"     varchar   not null,
     "email_1"      varchar   not null,
     "univ_1_id"    int       not null,
@@ -100,14 +101,14 @@ CREATE TABLE estimations
     "id"          bigserial not null primary key,
     "date_create" date      not null,
     "user_id"     int       not null,
-    "lecture_id"  int not null ,
-    "seminar_id"  int not null ,
-    "question_1"  int not null ,
-    "question_2"  int not null ,
-    "question_3"  int not null ,
-    "question_4"  int not null ,
-    "question_5"  int not null ,
-    "question_6"  int not null ,
+    "lecture_id"  int       not null,
+    "seminar_id"  int       not null,
+    "question_1"  int       not null,
+    "question_2"  int       not null,
+    "question_3"  int       not null,
+    "question_4"  int       not null,
+    "question_5"  int       not null,
+    "question_6"  int       not null,
     "title"       varchar,
     "description" varchar
 );

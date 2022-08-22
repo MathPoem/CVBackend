@@ -20,10 +20,20 @@ type Private interface {
 type Public interface {
 	GetUniversity() ([]models.University, error)
 	GetUniversityById(id int) (models.University, error)
-	GetSchool() ([]models.School, error)
+	GetSchool(id int) ([]models.School, error)
 	GetSchoolById(id int) (models.School, error)
-	GetDepartment() ([]models.Department, error)
+	GetDepartment(id int) ([]models.Department, error)
 	GetDepartmentById(id int) (models.Department, error)
+	GetPerson(id int) ([]models.Person, error)
+	GetPersonById(id int) (models.Person, error)
+	GetProgram(id int) ([]models.Program, error)
+	GetProgramById(id int) (models.Program, error)
+	GetCourse(id int) ([]models.Course, error)
+	GetCourseById(id int) (models.Course, error)
+	GetLecture(id int) ([]models.Lecture, error)
+	GetLectureById(id int) (models.Lecture, error)
+	GetSeminar(id int) ([]models.Seminar, error)
+	GetSeminarById(id int) (models.Seminar, error)
 }
 
 type Service struct {

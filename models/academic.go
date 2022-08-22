@@ -41,6 +41,7 @@ type Program struct {
 	Name      string `json:"name"`
 	YearStart int    `json:"yearStart"`
 	Semester  int    `json:"semester"`
+	Url       string `json:"url"`
 }
 
 type Course struct {

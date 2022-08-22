@@ -12,6 +12,10 @@ const (
 	universityTable = "university"
 	schoolTable     = "school"
 	departmentTable = "department"
+	programTable    = "program"
+	courseTable     = "course"
+	lectureTable    = "lecture"
+	seminarTable    = "seminar"
 )
 
 type Config struct {

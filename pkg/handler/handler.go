@@ -48,6 +48,36 @@ func (h *Handler) InitRouter() *gin.Engine {
 			department.GET("/", h.GetDepartment)
 			department.GET("/:departmentId", h.GetDepartmentById)
 		}
+
+		person := public.Group("/person")
+		{
+			person.GET("/", h.GetPerson)
+			person.GET("/:personId", h.GetPersonById)
+		}
+
+		program := public.Group("/program")
+		{
+			program.GET("/", h.GetProgram)
+			program.GET("/:programId", h.GetProgramById)
+		}
+
+		course := public.Group("/course")
+		{
+			course.GET("/", h.GetCourse)
+			course.GET("/:courseId", h.GetCourseById)
+		}
+
+		lecture := public.Group("/lecture")
+		{
+			lecture.GET("/", h.GetLecture)
+			lecture.GET("/:lectureId", h.GetLectureById)
+		}
+
+		seminar := public.Group("/seminar")
+		{
+			seminar.GET("/", h.GetSeminar)
+			seminar.GET("/:seminarId", h.GetSeminarById)
+		}
 	}
 
 	return router
