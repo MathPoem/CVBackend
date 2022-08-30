@@ -17,11 +17,15 @@ func NewPrivatePostgres(db *sqlx.DB) *PrivatePostgres {
 func (r *PrivatePostgres) CreateEstimate(estimate models.Estimate) (int, error) {
 	var id int
 	query := fmt.Sprintf(`INSERT INTO %s 
-		(date_create, user_id, lecture_id, seminar_id, question_1, question_2, question_3, question_4, question_5, question_6, title, description) 
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id`, estimateTable)
+		(date_create, user_id, lecture_id, seminar_id, course_id,
+		question_lec_1, question_lec_2, question_lec_3, question_lec_4, question_lec_5,
+		question_sem_1, question_sem_2, question_sem_3, question_sem_4, question_sem_5,
+		title, description) 
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING id`, estimateTable)
 	row := r.db.QueryRow(
-		query, estimate.Date, estimate.UserID, estimate.LectureID, estimate.SeminarID,
-		estimate.Question1, estimate.Question2, estimate.Question3, estimate.Question4, estimate.Question5, estimate.Question6,
+		query, estimate.Date, estimate.UserID, estimate.LectureID, estimate.SeminarID, estimate.CourseID,
+		estimate.QuestionLec1, estimate.QuestionLec2, estimate.QuestionLec3, estimate.QuestionLec4, estimate.QuestionLec5,
+		estimate.QuestionSem1, estimate.QuestionSem2, estimate.QuestionSem3, estimate.QuestionSem4, estimate.QuestionSem5,
 		estimate.Title, estimate.Description)
 
 	if err := row.Scan(&id); err != nil {
@@ -30,10 +34,13 @@ func (r *PrivatePostgres) CreateEstimate(estimate models.Estimate) (int, error) 
 	return id, nil
 }
 
-func (r *PrivatePostgres) GetEstimate(userId int) ([]models.Estimate, error) {
-	var estimates []models.Estimate
+func (r *PrivatePostgres) GetEstimate(userId int) ([]models.EstimateResponse, error) {
+	var estimates []models.EstimateResponse
 	query := fmt.Sprintf(
-		"SELECT lecture_id, seminar_id, question_1, question_2, question_3, question_4, question_5, question_6, title, description FROM %s WHERE user_id=$1",
+		`SELECT lecture_id, seminar_id, course_id,
+			question_lec_1, question_lec_2, question_lec_3, question_lec_4, question_lec_5,
+			question_sem_1, question_sem_2, question_sem_3, question_sem_4, question_sem_5
+			FROM %s WHERE user_id=$1`,
 		estimateTable)
 
 	rows, err := r.db.Query(query, userId)
@@ -43,10 +50,11 @@ func (r *PrivatePostgres) GetEstimate(userId int) ([]models.Estimate, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var estimate models.Estimate
+		var estimate models.EstimateResponse
 		if err := rows.Scan(
-			&estimate.LectureID, &estimate.SeminarID, &estimate.Question1, &estimate.Question2, &estimate.Question3,
-			&estimate.Question4, &estimate.Question5, &estimate.Question6, &estimate.Title, &estimate.Description,
+			&estimate.LectureID, &estimate.SeminarID, &estimate.CourseID,
+			&estimate.QuestionLec1, &estimate.QuestionLec2, &estimate.QuestionLec3, &estimate.QuestionLec4, &estimate.QuestionLec5,
+			&estimate.QuestionSem1, &estimate.QuestionSem2, &estimate.QuestionSem3, &estimate.QuestionSem4, &estimate.QuestionSem5,
 		); err != nil {
 			return nil, err
 		}

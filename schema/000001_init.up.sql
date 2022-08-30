@@ -51,6 +51,7 @@ CREATE TABLE "program"
 CREATE TABLE "course"
 (
     "id"                    bigserial not null primary key,
+    "semester"              int       not null,
     "name"                  varchar   not null,
     "program_id"            int       not null,
     "credits"               int       not null,
@@ -58,6 +59,7 @@ CREATE TABLE "course"
     "hours_seminar"         int       not null,
     "estimation_in_diploma" boolean   not null,
     "exam"                  boolean   not null,
+    "test"                  boolean   not null,
     "description"           text      not null,
     "url"                   varchar   not null
 );
@@ -82,35 +84,44 @@ CREATE TABLE "seminar"
 
 CREATE TABLE users
 (
-    "id"           bigserial not null primary key,
-    "username"     varchar   not null unique,
-    "password"     varchar   not null,
-    "email_1"      varchar   not null,
-    "univ_1_id"    int       not null,
-    "program_1_id" int       not null,
-    "email_2"      varchar,
-    "univ_2_id"    int,
-    "program_2_id" int,
-    "email_3"      varchar,
-    "univ_3_id"    int,
-    "program_3_id" int
+    "id"            bigserial not null primary key,
+    "username"      varchar   not null unique,
+    "password"      varchar   not null,
+    "email_1"       varchar   not null unique,
+    "univ_1_id"     int       not null,
+    "program_1_id"  int       not null,
+    "email_2"       varchar,
+    "univ_2_id"     int,
+    "program_2_id"  int,
+    "email_3"       varchar,
+    "univ_3_id"     int,
+    "program_3_id"  int,
+    "refresh_token" varchar   not null,
+    "expires_at"    date,
+    "confirmed"     bool,
+    "confirm_key"   varchar
 );
 
 CREATE TABLE estimations
 (
-    "id"          bigserial not null primary key,
-    "date_create" date      not null,
-    "user_id"     int       not null,
-    "lecture_id"  int       not null,
-    "seminar_id"  int       not null,
-    "question_1"  int       not null,
-    "question_2"  int       not null,
-    "question_3"  int       not null,
-    "question_4"  int       not null,
-    "question_5"  int       not null,
-    "question_6"  int       not null,
-    "title"       varchar,
-    "description" varchar
+    "id"             bigserial not null primary key,
+    "date_create"    date      not null,
+    "user_id"        int       not null,
+    "lecture_id"     int       not null,
+    "seminar_id"     int       not null,
+    "question_lec_1" int       not null,
+    "question_lec_2" int       not null,
+    "question_lec_3" int       not null,
+    "question_lec_4" int       not null,
+    "question_lec_5" int       not null,
+    "question_sem_1" int       not null,
+    "question_sem_2" int       not null,
+    "question_sem_3" int       not null,
+    "question_sem_4" int       not null,
+    "question_sem_5" int       not null,
+    "course_id"      int       not null,
+    "title"          varchar,
+    "description"    varchar
 );
 
 CREATE TABLE estimate_value
@@ -137,22 +148,19 @@ ALTER TABLE "users"
     ADD FOREIGN KEY ("program_3_id") REFERENCES "program" ("id");
 
 ALTER TABLE "estimations"
-    ADD FOREIGN KEY ("question_1") REFERENCES "estimate_value" ("id");
+    ADD FOREIGN KEY (question_lec_1) REFERENCES "estimate_value" ("id");
 
 ALTER TABLE "estimations"
-    ADD FOREIGN KEY ("question_2") REFERENCES "estimate_value" ("id");
+    ADD FOREIGN KEY (question_lec_2) REFERENCES "estimate_value" ("id");
 
 ALTER TABLE "estimations"
-    ADD FOREIGN KEY ("question_3") REFERENCES "estimate_value" ("id");
+    ADD FOREIGN KEY (question_lec_3) REFERENCES "estimate_value" ("id");
 
 ALTER TABLE "estimations"
-    ADD FOREIGN KEY ("question_4") REFERENCES "estimate_value" ("id");
+    ADD FOREIGN KEY (question_lec_4) REFERENCES "estimate_value" ("id");
 
 ALTER TABLE "estimations"
-    ADD FOREIGN KEY ("question_5") REFERENCES "estimate_value" ("id");
-
-ALTER TABLE "estimations"
-    ADD FOREIGN KEY ("question_6") REFERENCES "estimate_value" ("id");
+    ADD FOREIGN KEY (question_lec_5) REFERENCES "estimate_value" ("id");
 
 ALTER TABLE "estimations"
     ADD FOREIGN KEY ("lecture_id") REFERENCES "lecture" ("id");

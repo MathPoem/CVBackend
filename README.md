@@ -22,3 +22,6 @@
                 go get github.com/go-ozzo/ozzo-validation
 
     jwt:        go get -u github.com/golang-jwt/jwt/v4
+
+    cors:       go get github.com/gin-contrib/cors
+                go get github.com/rs/cors

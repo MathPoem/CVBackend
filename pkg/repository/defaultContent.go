@@ -42,7 +42,7 @@ func (r *DefaultContent) InDefaultContent() error {
 	}
 	for _, course := range models.CourseList {
 		r.db.QueryRow(
-			"INSERT INTO course (id, url, name,credits,description,estimation_in_diploma,exam,hours_lecture,hours_seminar,program_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+			"INSERT INTO course (id, url, name,credits,description,estimation_in_diploma,exam,hours_lecture,hours_seminar,program_id, test, semester) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)",
 			&course.ID,
 			&course.URL,
 			&course.Name,
@@ -52,7 +52,9 @@ func (r *DefaultContent) InDefaultContent() error {
 			&course.Exam,
 			&course.HoursLecture,
 			&course.HoursSeminar,
-			&course.ProgramID)
+			&course.ProgramID,
+			&course.Test,
+			&course.Semester)
 	}
 	for _, department := range models.DepartmentList {
 		r.db.QueryRow(

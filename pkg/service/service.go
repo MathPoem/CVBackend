@@ -7,13 +7,18 @@ import (
 
 type Authorization interface {
 	CreateUser(user models.User) (int, error)
-	GenerateToken(username, password string) (string, error)
+	GenerateToken(username, password string) (models.Tokens, error)
 	ParseToken(accessToken string) (int, error)
+	Refresh(token string) (models.Tokens, error)
+	CreateSession(id int) (models.Tokens, error)
+	GetUserByName(username, password string) (models.User, error)
+	Logout(id int, email string) error
+	Activate(key string) error
 }
 
 type Private interface {
 	Estimate(estimateInput models.Estimate, userId int) (int, error)
-	GetEstimate(userId int) ([]models.Estimate, error)
+	GetEstimate(userId int) ([]models.EstimateResponse, error)
 	CreatePerson(person models.Person, userId int) (int, error)
 }
 

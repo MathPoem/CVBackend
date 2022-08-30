@@ -47,12 +47,14 @@ type Program struct {
 type Course struct {
 	ID                  int    `json:"id"`
 	Name                string `json:"name"`
+	Semester            int    `json:"semester"`
 	ProgramID           int    `json:"programID"`
 	Credits             int    `json:"credits"`
 	HoursLecture        int    `json:"hoursLecture"`
 	HoursSeminar        int    `json:"hoursSeminar"`
 	EstimationInDiploma bool   `json:"estimationInDiploma"`
 	Exam                bool   `json:"exam"`
+	Test                bool   `json:"test"`
 	Description         string `json:"description"`
 	URL                 string `json:"url"`
 }

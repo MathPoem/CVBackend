@@ -234,7 +234,7 @@ func (r *PublicPostgres) GetProgramById(id int) (models.Program, error) {
 
 func (r *PublicPostgres) GetCourse() ([]models.Course, error) {
 	var courses []models.Course
-	query := fmt.Sprintf("SELECT id, program_id, name, hours_lecture, hours_seminar, estimation_in_diploma, exam, description, url FROM %s", courseTable)
+	query := fmt.Sprintf("SELECT id, program_id, name, hours_lecture, hours_seminar, estimation_in_diploma, exam, description, url, semester, test FROM %s", courseTable)
 	rows, err := r.db.Query(query)
 	if err != nil {
 		return nil, err
@@ -243,7 +243,7 @@ func (r *PublicPostgres) GetCourse() ([]models.Course, error) {
 		var course models.Course
 		if err := rows.Scan(
 			&course.ID, &course.ProgramID, &course.Name, &course.HoursLecture, &course.HoursSeminar,
-			&course.EstimationInDiploma, &course.Exam, &course.Description, &course.URL); err != nil {
+			&course.EstimationInDiploma, &course.Exam, &course.Description, &course.URL, &course.Semester, &course.Test); err != nil {
 			return nil, err
 		}
 		courses = append(courses, course)
@@ -253,7 +253,7 @@ func (r *PublicPostgres) GetCourse() ([]models.Course, error) {
 
 func (r *PublicPostgres) GetCourseByProgram(id int) ([]models.Course, error) {
 	var courses []models.Course
-	query := fmt.Sprintf("SELECT id, program_id, name, hours_lecture, hours_seminar, estimation_in_diploma, exam, description, url FROM %s WHERE program_id=$1",
+	query := fmt.Sprintf("SELECT id, program_id, name, hours_lecture, hours_seminar, estimation_in_diploma, exam, description, url, semester, test FROM %s WHERE program_id=$1",
 		courseTable)
 	rows, err := r.db.Query(query, id)
 	if err != nil {
@@ -263,7 +263,7 @@ func (r *PublicPostgres) GetCourseByProgram(id int) ([]models.Course, error) {
 		var course models.Course
 		if err := rows.Scan(
 			&course.ID, &course.ProgramID, &course.Name, &course.HoursLecture, &course.HoursSeminar,
-			&course.EstimationInDiploma, &course.Exam, &course.Description, &course.URL); err != nil {
+			&course.EstimationInDiploma, &course.Exam, &course.Description, &course.URL, &course.Semester, &course.Test); err != nil {
 			return nil, err
 		}
 		courses = append(courses, course)
@@ -273,12 +273,12 @@ func (r *PublicPostgres) GetCourseByProgram(id int) ([]models.Course, error) {
 
 func (r *PublicPostgres) GetCourseById(id int) (models.Course, error) {
 	var course models.Course
-	query := fmt.Sprintf("SELECT id, program_id, name, hours_lecture, hours_seminar, estimation_in_diploma, exam, description, url FROM %s WHERE id=$1",
+	query := fmt.Sprintf("SELECT id, program_id, name, hours_lecture, hours_seminar, estimation_in_diploma, exam, description, url, semester, test FROM %s WHERE id=$1",
 		courseTable)
 	row := r.db.QueryRow(query, id)
 	if err := row.Scan(
 		&course.ID, &course.ProgramID, &course.Name, &course.HoursLecture, &course.HoursSeminar,
-		&course.EstimationInDiploma, &course.Exam, &course.Description, &course.URL); err != nil {
+		&course.EstimationInDiploma, &course.Exam, &course.Description, &course.URL, &course.Semester, &course.Test); err != nil {
 		return models.Course{}, err
 	}
 	return course, nil

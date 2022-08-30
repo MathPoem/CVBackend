@@ -8,6 +8,10 @@ import (
 type Authorization interface {
 	CreateUser(user models.User) (int, error)
 	GetUser(username, password string) (models.User, error)
+	CreateUserSession(token, date string, userId int) error
+	GetUserByToken(token string) (int, error)
+	DeleteUserSession(id int, email string) error
+	ActivateUser(key string) error
 }
 
 type Default interface {
@@ -16,7 +20,7 @@ type Default interface {
 
 type Private interface {
 	CreateEstimate(estimate models.Estimate) (int, error)
-	GetEstimate(userId int) ([]models.Estimate, error)
+	GetEstimate(userId int) ([]models.EstimateResponse, error)
 	CreatePerson(person models.Person, userId int) (int, error)
 }
 

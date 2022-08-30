@@ -20,7 +20,7 @@ func (s *PrivateService) Estimate(estimateInput models.Estimate, userId int) (in
 	return s.repo.CreateEstimate(estimateInput)
 }
 
-func (s *PrivateService) GetEstimate(userId int) ([]models.Estimate, error) {
+func (s *PrivateService) GetEstimate(userId int) ([]models.EstimateResponse, error) {
 	return s.repo.GetEstimate(userId)
 }
 
