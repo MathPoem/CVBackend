@@ -16,6 +16,7 @@ type Authorization interface {
 
 type Default interface {
 	InDefaultContent() error
+	ContentMigrate() error
 }
 
 type Private interface {

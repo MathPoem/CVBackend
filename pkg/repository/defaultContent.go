@@ -2,7 +2,10 @@ package repository
 
 import (
 	"CVBackend/models"
+	"encoding/csv"
+	"fmt"
 	"github.com/jmoiron/sqlx"
+	"os"
 )
 
 type DefaultContent struct {
@@ -99,6 +102,28 @@ func (r *DefaultContent) InDefaultContent() error {
 			&seminar.PersonID,
 			&seminar.CourseID,
 			&seminar.URL)
+	}
+	return nil
+}
+
+func (r *DefaultContent) ContentMigrate() error {
+	file, err := os.Open("")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	reader.FieldsPerRecord = 3
+	reader.Comment = '#'
+
+	for {
+		record, e := reader.Read()
+		if e != nil {
+			fmt.Println(e)
+			break
+		}
+		fmt.Println(record)
 	}
 	return nil
 }
